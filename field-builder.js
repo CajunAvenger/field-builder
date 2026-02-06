@@ -3,6 +3,7 @@ const Jimp = require('jimp');
 const toolbox = require('./src/toolbox.js');
 const stitch = require('./src/stitch.js');
 const rick = require('./src/rick.js');
+const current_vers = "1.1";
 
 let WIDE_TYPES = /Battle/;
 let FILE_TYPE = "jpg";
@@ -116,7 +117,7 @@ function prepareFiles() {
 						try {
 							let exported = JSON.parse(data);
 							let cards = {};
-							let meta = {title:""};
+							let meta = {title:"", version:"0.8"};
 							let sc = "";
 							if(exported.meta) {
 								cards = stitch.arrayExpand(exported.cards);
@@ -128,7 +129,8 @@ function prepareFiles() {
 								if(sc == "tokens")
 									sc = exported[0].parentSet;
 							}
-
+							if(!meta.version || current_vers > meta.version)
+								console.log(`File ${fn} is using an out of date exporter. The set will likely build, but may have visual errors.`);
 							if(!sc)
 								throw `File ${fn} does not have a set code.`;
 							if(new_sets.hasOwnProperty(sc)) {

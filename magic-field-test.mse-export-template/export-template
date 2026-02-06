@@ -123,9 +123,9 @@ script:
 	# !notes tag
 	notes_filter := filter_text@(match:"!notes? [^\n!]+")
 	notes_grabber := replace@(match:"!notes? ", replace:"")
-		+replace@(match:"([^,]+)", replace:{"\"" + _1 + "\""})
+		+replace@(match:"([^,]+)", replace:{"\"" + sanitize(_1) + "\""})
 		+replace@(match:"italics", replace:"italic")
-	card_note_array := { "[" + (if notes_grabber(notes_filter(card.notes)) != "" then sanitize(notes_grabber(notes_filter(card.notes))) else "") + "]" }
+	card_note_array := { "[" + (if notes_grabber(notes_filter(card.notes)) != "" then notes_grabber(notes_filter(card.notes)) else "") + "]" }
 	
 	# process text for LackeyBot
 	lackey_bot_rule_filter := replace@(match:"’", replace:"'")+
