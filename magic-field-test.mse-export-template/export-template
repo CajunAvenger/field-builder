@@ -1,9 +1,9 @@
 ﻿mse version: 2.0.0
 short name: Field Test
-full name: version 1.0
+full name: version 1.1
 position hint: 120
 icon: icon.png
-version: 2018-02-09
+version: 2026-02-06
 installer group: magic/Export/lackeyccg
 
 depends on:
@@ -28,6 +28,7 @@ option field:
 	name: export images
 script:
 	# replace shenanigans
+	template_vers := "1.1"
 	fix_tm := replace@(match:"™", replace:"TM")
 	fixed_set_code := {
 		trim(fix_tm(if options.set_code != "" then options.set_code else set.set_code))
@@ -360,7 +361,7 @@ script:
 	write_cards := to_text(for each card in cards do write_update())
 	clean_cards := replace@(match:",\n$", replace: "\n")
 		+replace@(match:"’", replace:"'")
-	write_set := "\"meta\":\{\"setID\": \"{fixed_set_code()}\", \"title\": \"{quote_replace(set.title)}\"\},"
+	write_set := "\"meta\":\{\"version\":\"{template_vers}\", \"setID\": \"{fixed_set_code()}\", \"title\": \"{quote_replace(set.title)}\"\},"
 	####################################
 	file_name := {
 		(
