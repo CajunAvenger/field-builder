@@ -193,6 +193,7 @@ function prepareFiles() {
 							}
 						}catch(e) {
 							error_count++;
+							console.log(`Error reading ${fn1}/${fn}:`);
 							console.log(e);
 						}
 						
@@ -306,6 +307,10 @@ function processImages(library, trice_names) {
 	for(let c in library.cards) {
 		let card = library.cards[c];
 		let names = trice_names[c];
+		if(!names) {
+			console.log(`Failed to generate names for ${c}, skipping.`);
+			continue;
+		}
 		let si = card.setID;
 		if(si == "tokens")
 			si = card.parentSet;

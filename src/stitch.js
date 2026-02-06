@@ -850,6 +850,8 @@ function arrayExpand(ar) {
 	}
 	for(let c in ar) {
 		let entry = ar[c];
+		if(entry.skip)
+			continue;
 		let cn = entry.fullName;
 		let tag = "_" + entry.setID;
 		if(entry.setID == "tokens") {
