@@ -197,6 +197,8 @@ function stitchLibraries(lib, newlib) {
 				let match = conjG[g].match(conjureRegex);
 				let amount = match[1];
 				let name = match[2];
+				if(!name.match(/^[A-Z0-9]/))
+					continue;
 				let count = numbers.indexOf(amount);
 				if(count < 1)
 					count = 1;
@@ -630,6 +632,8 @@ function pullColorIdentity(card) {
 	}
 	// grab from color indicators
 	let conv = {"White": "W", "Blue":"U", "Black":"B", "Red":"R", "Green":"G"}
+	if(!card.color)
+		card.color = "";
 	mash = card.color
 	if(card.color2)
 		mash += card.color2;
