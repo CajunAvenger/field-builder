@@ -490,6 +490,9 @@ function tokenPuller(c, shout) {
 	if(cleanoracle.match(/^Ascend/) && !cleanoracle.match(/^Ascend [{]/)) {
 		tokens.push(["The City's Blessing", 1]);
 	}
+	if(cleanoracle.match(/^Sunken/) || cleanoracle.match(/Trench/)) {
+		tokens.push(["colorless Trench land with some other stuff", 1, "Keyword: Sunken"]);
+	}
 
 	// apply tokenscripts overrides
 	if(thisCard.tokenscripts) {
