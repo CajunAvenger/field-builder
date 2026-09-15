@@ -466,7 +466,7 @@ function tokenPuller(c, shout) {
 	}else if(cleanoracle.match(/equalise/i)) {
 		tokens.push(["Equalised Dragon", 1, "Keyword: Equalise"]);
 	}
-	if(cleanoracle.match(/^Aurora/)) {
+	if(cleanoracle.match(/^Aurora/m)) {
 		tokens.push(["Aurora Reminder", 1, "Keyword: Aurora"]);
 	}
 	if(cleanoracle.match(/builds? hype/)) {
@@ -487,10 +487,10 @@ function tokenPuller(c, shout) {
 		tokens.push(["Call The Beast Emblem", 1]);
 		tokens.push(["The Beast", 1]);
 	}
-	if(cleanoracle.match(/^Ascend/) && !cleanoracle.match(/^Ascend [{]/)) {
+	if(cleanoracle.match(/^Ascend/m) && !cleanoracle.match(/^Ascend [{]/m)) {
 		tokens.push(["The City's Blessing", 1]);
 	}
-	if(cleanoracle.match(/^Compete/)) {
+	if(cleanoracle.match(/^Compete/m)) {
 		tokens.push(["Chest of Desires", 1]);
 		tokens.push(["Sigil of Conquest", 1]);
 		tokens.push(["Sword of Victory", 1]);
