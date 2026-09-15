@@ -496,6 +496,12 @@ function tokenPuller(c, shout) {
 		tokens.push(["Sword of Victory", 1]);
 		tokens.push(["Trophy Reminder", 1]);
 	}
+	if(cleanoracle.match(/prepare/) && thisCard.hasOwnProperty("typeLine2")) {
+		// check if we prepare a permanent
+		if(thisCard.typeLine2.match(/Creature|Artifact|Enchantment|Battle|Token|Planeswalker/)) {
+			tokens.push([thisCard.cardName2, 1, "Prepared permanent spell"]);
+		}
+	}
 	if(cleanoracle.match(/^Sunken/) || cleanoracle.match(/Trench/)) {
 		tokens.push(["colorless Trench land with some other stuff", 1, "Keyword: Sunken"]);
 	}
