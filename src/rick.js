@@ -314,6 +314,13 @@ function tokenPuller(c, shout) {
 							tokens.push([token_base_name, tN, token_with_name]);
 					}
 				}
+				else{
+					// a Tarmogoyf token
+					let matcher = groups[g].match(/(an|a|X|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty) ([A-Z][a-z]+([-, ]+([A-Z][a-z]+|and|an|as|at|a|but|by|for|into|in|of|or|on|the|this|to|with))*) tokens?/);
+					if(matcher) {
+						tokens.push([matcher[2], countInt(matcher[1])])
+					}
+				}
 			}
 			// manual corrections
 			for(let t in tokens) {
@@ -457,10 +464,6 @@ function tokenPuller(c, shout) {
 		tokens.push(["colorless Saga enchantment with some other stuff", 1, "Keyword: Compose"]);
 	
 	// field test
-	if(cleanoracle.match(/Embrace/i)) {
-		tokens.push(["Embraced Cards", 1, "Keyword: Embrace"]);
-		tokens.push(["Embraced Representative", 1, "Keyword: Embrace"]);
-	}
 	if(cleanoracle.match(/equalise [^.,]+ X times/i)) {
 		tokens.push(["Equalised Dragon", "x", "Keyword: Equalise"]);
 	}else if(cleanoracle.match(/equalise/i)) {
@@ -604,7 +607,7 @@ function tokenBuilding(flags) {
 		if(library.cards[c].setID == "tokens")
 			continue;
 		let card = library.cards[c];
-		let prede_check = card.rulesText.match(/[Cc]reate (?:an|a|X|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty) ([A-Z][a-z]+([- ][A-Z][a-z]+)?) tokens?/);
+		let prede_check = card.rulesText.match(/[Cc]reate (?:an|a|X|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty) ([A-Z][a-z]+([-, ]+([A-Z][a-z]+|and|an|as|at|a|but|by|for|into|in|of|or|on|the|this|to|with))*) tokens?/);
 		if(prede_check) {
 			let prede = prede_check[1];
 			if(!predef.includes(prede)) {

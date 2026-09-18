@@ -3,7 +3,7 @@ const Jimp = require('jimp');
 const toolbox = require('./src/toolbox.js');
 const stitch = require('./src/stitch.js');
 const rick = require('./src/rick.js');
-const current_vers = "1.1";
+const current_vers = "1.2";
 
 let WIDE_TYPES = /Battle/;
 let FILE_TYPE = "jpg";
@@ -329,7 +329,13 @@ function processImages(library, trice_names) {
 				return;
 			}
 			if(names.length > 1) {
-				if(card.shape == "doubleface") {
+				if(card.hasOwnProperty("backID")) {
+					// duplicate this file and its b side
+					let bside = `./files/${pi}/${si}/${card.backID}.${FILE_TYPE}`;
+					forkImage(current, outdir, names);
+					tryForkImage(bside, outdir, names[1]);
+				}
+				else if(card.shape == "doubleface") {
 					// split this image, then delete this file
 					let b2 = card.typeLine2.match(WIDE_TYPES);
 					splitImage(current, outdir, names, b2);
@@ -399,6 +405,15 @@ function forkImage(fn, dir, names) {
 				console.log(er);
 		})
 	}
+}
+function tryForkImage(fn, outdir, name) {
+	fs.exists(fn, (exists) => {
+		if(!exists) {
+			console.log(`Couldn't find ${fn}.`);
+			return;
+		}
+		forkImage(fn, outdir, [name]);
+	})
 }
 async function apiPartialLibrary(k) {
 	let format = k.replace(/^--/, "");
